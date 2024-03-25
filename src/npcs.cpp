@@ -1,13 +1,13 @@
 #include "npcs.h"
 
 #include "npcs_images.h"
+#include "npcs_text.h"
 #include "ui_images.h"
 #include "player.h"
 #include "tools.h"
 
 #include "Font3x5.h"
-
-#define CATHY_3K
+#include "FlashStringHelper.h"
 
 extern Arduboy2 arduboy;
 extern Player player;
@@ -124,77 +124,29 @@ void draw_overlay() {
     switch (player.npc_target) {
         case ELDER:
             font3x5.print(F("HELLO MY FRIEND\nSTAY A WHILE AND LISTEN!\n\n"));
-            switch (npc_text_selection) {
-                
-                case 0:
-                    font3x5.print(F("I HAVE HEARD\nTHAT A FOUL AND\nPOWERFUL DEMON LURKS\nIN THE CHURCH\nYOU MUST SLAY HIM!"));
-                    break;
-                case 1:
-                    font3x5.print(F("AS YOU DESCEND\nINTO THE LABRYINTH\nMAKE SURE TO LOOK\nAT MANY ITEMS\nSOME MAY BE MAGIC!"));
-                    break;
-                #ifdef CATHY_3K
-                    case 2:
-                        font3x5.print(F("I HAVE SEEN MANY\nMONSTERS OF ALL FOUL\nKINDS PEEKING OUT\nFROM THE\nCHURCH.BE WARY!"));
-                        break;
-                    case 3:
-                        font3x5.print(F("I SUSPECT OUR OPPRESSORS\nHAVE COME FROM THE\nNINE INFERNAL HELLS.\nWHO KNOWS WHAT ASMORDEUS\nTHE WICKED IS UP TO NOW?"));
-                        break;
-                    case 4:
-                        font3x5.print(F("OUR BLACKSMITH HAS\nTHE BEST WEAPONS\nAND ARMOUR IN THIS FIEF!\nEVEN OUR DUKE USES\nTHEM FOR HIS ARMY!"));
-                        break;
-                    case 5:
-                        font3x5.print(F("MANY GREAT ADVENTURERS\nHAVE COME HERE BUT\nNONE HAVE COME OUT."));
-                        break;
-                    case 6:
-                        font3x5.print(F("ONCE THE RUTHLESS SWORD\nWILL STRIKE TWICE THE EVIL\nDEMON BITES THRICE THE\nHOLY ANGEL SINGS QUADRICE\nGREAT JUDGEMENT RINGS"));
-                        break;
-                #endif
-            }
+            font3x5.print(readFlashStringPointer(&npcs_text[npc_text_selection]));
             break;
         case BLACKSMITH:
-            font3x5.print(F("WELL WHAT CAN I DO FOR YA?\n\n"));
-            font3x5.print(F("BUY AN GREATAXE 75G\n"));
-            font3x5.print(F("BUY A GREATSWORD 75G\n"));
-            font3x5.print(F("BUY A ROYAL SHIELD 50G\n"));
+            font3x5.print(F(
+	            "WELL WHAT CAN I DO FOR YA?\n\n"
+	            "BUY AN GREATAXE 75G\n"
+	            "BUY A GREATSWORD 75G\n"
+	            "BUY A ROYAL SHIELD 50G\n"
+            ));
             break;
         case HEALER:
-            font3x5.print(F("WHAT AILS YOU MY FRIEND?\n\n"));
-            font3x5.print(F("BUY A HEALTH POTION 5G\n"));
-            font3x5.print(F("BUY A LARGE HLTH POT. 10G\n"));
-            font3x5.print(F("RECIEVE HEALING"));
+            font3x5.print(F(
+                "WHAT AILS YOU MY FRIEND?\n\n"
+                "BUY A HEALTH POTION 5G\n"
+                "BUY A LARGE HLTH POT. 10G\n"
+                "RECIEVE HEALING"));
             break;
         case INNKEEPER:
             font3x5.print(F("THANK GOODNESS YOUVE\nRETURNED MY FRIEND!\nDARK RIDERS RAVAGED\nTHE TOWN AND TOOK\nMANY TO THE CHURCH\nFOLLOW THE PATH LEADING TO\nTHE NORTH TO SAVE\nWHO YOU CAN.GOOD LUCK!"));
             break;
         case MAGE:
             font3x5.print(F("I SENSE A SOUL IN\nSEARCH OF ANSWERS\n\n"));
-            switch (npc_text_selection) {
-                case 0:
-                    font3x5.print(F("WISDOM IS EARNED NOT\nGIVEN. KEEP THIS IN MIND!"));
-                    break;
-                case 1:
-                    font3x5.print(F("SOMETHING DEMONIC LIES\nIN THAT CHURCH\nMY MAGIC WILL AID\nYOU IF YOU GO IN!"));
-                    break;
-                #ifdef CATHY_3K
-                    case 2:
-                        font3x5.print(F("CANE OUR ELDER HAS\nWISDOM THAT RIVALS\nMY OWM.TRUST\nWHAT HE SAYS!"));
-                        break;
-                    case 3:
-                        font3x5.print(F("BEWARE OF FIREBALLS!\nTHE HIGHEST RANKING\nDEMONS CAN CREATE\nTHEM AT WILL!"));
-                        break;
-                    case 4:
-                        font3x5.print(F("RAVENSGUARD LIES BETWEEN\nMT. CELESTIALS AND THE\nINFERNAL HELLS. YOU HAVE\nCOME TO A DANGEROUS\nPLACE TRAVELLER!"));
-                        break;
-                    case 5:
-                        font3x5.print(F("REJUVINATION POTIONS ARE\nTHE BEST POTIONS IN THE\nLAND. ONLY THE MOST\nPOWERFUL MONSTERS HAVE\nTHEM!"));
-                        break;
-                    case 6:
-                        font3x5.print(F("I HAVE SEEN THE\nFUTURE, YOUNG LAD.\nYOU WILL DESTROY AN\nARCHDEMON AND STABILIZE\nOUR REALM!"));
-                        break;
-                #endif
-
-            }
-
+            font3x5.print(readFlashStringPointer(&npcs_text[npc_text_selection + MAGE_TEXT_OFFSET]));
             break;
         case SECRET:
             font3x5.print(F("WELCOME TO THE\nSECRET YODARUB FAN CLUB!\nYOU GOT YODARUBBED!"));

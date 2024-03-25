@@ -72,7 +72,7 @@ void draw_main_menu() {
     arduboy.drawBitmap(MAIN_TEXT_X, MAIN_TEXT_Y, title_screen_text, 113, 22);
     arduboy.drawBitmap(MAIN_FLAME_X, MAIN_FLAME_Y, title_screen_flame, 4, 8);
     font3x5.setCursor(MAIN_CREDIT_X, MAIN_CREDIT_Y);
-    font3x5.print("BY SUBLINEAR");
+    font3x5.print(F("BY SUBLINEAR"));
     font3x5.setCursor(MENU_START_X, MENU_START_Y);
     font3x5.println(F("LOAD GAME"));
     font3x5.println(F("NEW GAME"));
@@ -373,22 +373,17 @@ void draw_inv() {
 
     // sprintf(buffer, "STR %d\nCON %d\nDEX %d\nMNA %d\nLVL %d", player.stats[0], player.stats[1], player.stats[2], player.stats[3], player.level);
     font3x5.print(F("STR "));
-    utoa(player.stats[0], buffer, 10);
-    font3x5.println(buffer);
+    font3x5.println(player.stats[0]);
 
     font3x5.print(F("CON "));
-    utoa(player.stats[1], buffer, 10);
-    font3x5.println(buffer);
+    font3x5.println(player.stats[1]);
 
     font3x5.print(F("DEX "));
-    utoa(player.stats[2], buffer, 10);
-    font3x5.println(buffer);
+    font3x5.println(player.stats[2]);
 
     font3x5.print(F("MNA "));
-    utoa(player.stats[3], buffer, 10);
-    font3x5.println(buffer);
+    font3x5.println(player.stats[3]);
 
     font3x5.print(F("LVL "));
-    utoa(player.level, buffer, 10);
-    font3x5.println(buffer);      
+    font3x5.println(player.level);      
 }

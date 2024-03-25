@@ -195,10 +195,8 @@ void TileMap::draw_dungeon() {
     }
     font3x5.setCursor(100, 0);
 
-    font3x5.print("LEVEL ");
-    char buf[3];
+    font3x5.print(F("LEVEL "));
 
-    utoa(dungeon_level, buf, 10);
-    font3x5.print(buf);
+    font3x5.print(dungeon_level);
 }
 
