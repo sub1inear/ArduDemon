@@ -33,7 +33,7 @@ enum npc_t : uint8_t {
     HEALER,
     INNKEEPER,
     MAGE,
-    SECRET, // not a very well-kept one ;-D
+    SECRET,
 };
 
 void update_npc_menu();

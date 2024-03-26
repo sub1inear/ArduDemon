@@ -86,8 +86,8 @@ void Enemy::update() {
             boss_fireball.x += boss_fireball.dx;
             boss_fireball.y += boss_fireball.dy;
             boss_fireball.timer -= 1;
-            uint16_t distsq = (player.x /*+ PLAYER_OFFSET_X*/ - boss_fireball.x) * (player.x /*+ PLAYER_OFFSET_X*/ - boss_fireball.x) +
-                            (player.y /*+ PLAYER_OFFSET_Y*/ - boss_fireball.y) * (player.y /*+ PLAYER_OFFSET_Y*/ - boss_fireball.y);
+            uint16_t distsq = (player.x - boss_fireball.x) * (player.x - boss_fireball.x) +
+                            (player.y - boss_fireball.y) * (player.y - boss_fireball.y);
             if (distsq < 16 * 16) {
                 damage_player();
                 boss_fireball.timer = 0;
@@ -97,8 +97,8 @@ void Enemy::update() {
         }
 
         // stop enemies from running over the player
-        uint16_t distsq = (player.x /*+ PLAYER_OFFSET_X*/ - x) * (player.x /*+ PLAYER_OFFSET_X*/ - x) +
-                            (player.y /*+ PLAYER_OFFSET_Y*/ - y) * (player.y /*+ PLAYER_OFFSET_Y*/ - y);
+        uint16_t distsq = (player.x - x) * (player.x - x) +
+                            (player.y - y) * (player.y - y);
         uint8_t boss_offset = (type == BOSS) ? 3 : 0; 
         if (distsq < (16 + boss_offset) * (16 + boss_offset)) { // square other num to remove sqrt
             if (attack_timer) {
@@ -117,17 +117,17 @@ void Enemy::update() {
                 boss_fireball.y = y + 10;
                 boss_fireball.flipped = false;
 
-                if (player.x /*+ PLAYER_OFFSET_X*/ > x) {
+                if (player.x > x) {
                     boss_fireball.dx = 1;
-                } else if (player.x /*+ PLAYER_OFFSET_X*/ < x) {
+                } else if (player.x < x) {
                     boss_fireball.dx = -1;
                     boss_fireball.flipped = true;
                 } else {
                     boss_fireball.dx = 0;
                 }
-                if (player.y /*+ PLAYER_OFFSET_Y*/ > y) {
+                if (player.y > y) {
                     boss_fireball.dy = 1;
-                } else if (player.y /*+ PLAYER_OFFSET_Y*/ < y) {
+                } else if (player.y < y) {
                     boss_fireball.dy = -1;
                 } else {
                     boss_fireball.dy = 0;
@@ -158,17 +158,17 @@ void Enemy::update() {
             int8_t x_sign = 0;
             int8_t y_sign = 0;
 
-            if (player.x /*+ PLAYER_OFFSET_X*/ > x) {
+            if (player.x > x) {
                 x_sign = 1;
-            } else if (player.x /*+ PLAYER_OFFSET_X*/ < x) {
+            } else if (player.x < x) {
                 x_sign = -1;
             } else {
                 x_sign = 0;
             }
 
-            if (player.y /*+ PLAYER_OFFSET_Y*/ > y) {
+            if (player.y > y) {
                 y_sign = 1;
-            } else if (player.y /*+ PLAYER_OFFSET_Y*/ < y) {
+            } else if (player.y < y) {
                 y_sign = -1;
             } else {
                 y_sign = 0;

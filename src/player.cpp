@@ -222,8 +222,8 @@ void Player::update() {
             for (uint8_t i = 0; i < num_items; i++) {
                 uint8_t image_offset = items[i].size / 2; // Gold is 16x16, rest are 8x8
 
-                uint16_t x_dist = abs((items[i].x + image_offset) - (x /*+ PLAYER_OFFSET_X*/ + 7));
-                uint16_t y_dist = abs((items[i].y + image_offset) - (y /*+ PLAYER_OFFSET_Y*/ + 7));
+                uint16_t x_dist = abs((items[i].x + image_offset) - (x + 7));
+                uint16_t y_dist = abs((items[i].y + image_offset) - (y + 7));
                 uint24_t distsq = (uint24_t)x_dist * (uint24_t)x_dist + (uint24_t)y_dist * (uint24_t)y_dist;
 
                 if (distsq < (image_offset + 3) * (image_offset + 3)) {
@@ -292,8 +292,8 @@ void Player::update() {
             
             for (uint8_t i = 0; i < NUM_ENEMIES; i++) { // do damage
                 if (enemies[i].active && !enemies[i].dead) {
-                    int16_t x_dist = (enemies[i].x + 8) - (x /*+ PLAYER_OFFSET_X*/ + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 0));
-                    int16_t y_dist = (enemies[i].y + 8) - (y /*+ PLAYER_OFFSET_Y*/ + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 1));
+                    int16_t x_dist = (enemies[i].x + 8) - (x + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 0));
+                    int16_t y_dist = (enemies[i].y + 8) - (y + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 1));
                     uint24_t distsq = (uint24_t)x_dist * (uint24_t)x_dist + (uint24_t)y_dist * (uint24_t)y_dist;
 
                     if (distsq < 11 * 11) {
@@ -373,8 +373,8 @@ void Player::update() {
     // collide on x axis
     x += x_axis;
 
-    uint8_t tile_x = (x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X) / 16;
-    uint8_t tile_y = (y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y) / 16;
+    uint8_t tile_x = (x + PLAYER_COLLISION_OFFSET_X) / 16;
+    uint8_t tile_y = (y + PLAYER_COLLISION_OFFSET_Y) / 16;
     
     if (is_collidable(tile_x, tile_y)) {
         x -= x_axis;
@@ -383,8 +383,8 @@ void Player::update() {
     if (tile_map->dungeon) { // collide with enemies
         for (uint8_t i = 0; i < NUM_ENEMIES; i++) { 
             if (enemies[i].active && !enemies[i].dead) {
-                uint16_t x_dist = abs((enemies[i].x + 8) - (x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X));
-                uint16_t y_dist = abs((enemies[i].y + 8) - (y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y));
+                uint16_t x_dist = abs((enemies[i].x + 8) - (x + PLAYER_COLLISION_OFFSET_X));
+                uint16_t y_dist = abs((enemies[i].y + 8) - (y + PLAYER_COLLISION_OFFSET_Y));
                 uint24_t distsq = x_dist * x_dist + y_dist * y_dist;
                 uint8_t boss_offset = (enemies[i].type == BOSS) ? 8 : 0;
 
@@ -398,8 +398,8 @@ void Player::update() {
     // collide on y axis
     y += y_axis;
 
-    tile_x = (x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X) / 16;
-    tile_y = (y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y) / 16;
+    tile_x = (x + PLAYER_COLLISION_OFFSET_X) / 16;
+    tile_y = (y + PLAYER_COLLISION_OFFSET_Y) / 16;
     
     if (is_collidable(tile_x, tile_y)) {
         y -= y_axis;
@@ -408,8 +408,8 @@ void Player::update() {
     if (tile_map->dungeon) { // collide with enemies
         for (uint8_t i = 0; i < NUM_ENEMIES; i++) { 
             if (enemies[i].active && !enemies[i].dead) {
-                uint16_t x_dist = abs((enemies[i].x + 8) - (x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X));
-                uint16_t y_dist = abs((enemies[i].y + 8) - (y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y));
+                uint16_t x_dist = abs((enemies[i].x + 8) - (x + PLAYER_COLLISION_OFFSET_X));
+                uint16_t y_dist = abs((enemies[i].y + 8) - (y + PLAYER_COLLISION_OFFSET_Y));
                 uint24_t distsq = x_dist * x_dist + y_dist * y_dist;
                 uint8_t boss_offset = (enemies[i].type == BOSS) ? 8 : 0;
 
@@ -423,8 +423,8 @@ void Player::update() {
     on_stairs_down = false;
     on_stairs_up = false;
 
-    tile_x = (x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X) / 16;
-    tile_y = (y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y) / 16;
+    tile_x = (x + PLAYER_COLLISION_OFFSET_X) / 16;
+    tile_y = (y + PLAYER_COLLISION_OFFSET_Y) / 16;
     if (tile_map->dungeon) {
         if (tile_x == tile_map->start_tile_x && tile_y == tile_map->start_tile_y) {
             on_stairs_up = true;
@@ -503,7 +503,7 @@ void Player::draw() {
             hat = wizard_hat_image;
             offset = 3;
         }
-        arduboy.drawBitmap(x - scrollx /*+ PLAYER_OFFSET_X*/ + offset, y - scrolly /*+ PLAYER_OFFSET_Y*/ - 7, hat, 8, 8);
+        arduboy.drawBitmap(x - scrollx + offset, y - scrolly - 7, hat, 8, 8);
     }
     if (attacking) {
 
@@ -540,8 +540,8 @@ void Player::draw() {
     for (uint8_t i = 0; i < num_items; i++) {
         uint8_t image_offset = (items[i].type == GOLD) ? 8 : 4; // type 0 is 16x16, rest are 8x8
 
-        uint16_t x_dist = abs((items[i].x + image_offset) - (x /*+ PLAYER_OFFSET_X*/ + 7));
-        uint16_t y_dist = abs((items[i].y + image_offset) - (y /*+ PLAYER_OFFSET_Y*/ + 7));
+        uint16_t x_dist = abs((items[i].x + image_offset) - (x + 7));
+        uint16_t y_dist = abs((items[i].y + image_offset) - (y + 7));
         uint24_t distsq = (uint24_t)x_dist * (uint24_t)x_dist + (uint24_t)y_dist * (uint24_t)y_dist;
         
         if (distsq < (image_offset + 3) * (image_offset + 3)) {

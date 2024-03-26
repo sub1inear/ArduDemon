@@ -249,8 +249,8 @@ void update_inv() {
 
                 uint8_t drop_offset = to_drop.size / 2;
 
-                to_drop.x = player.x /*+ PLAYER_OFFSET_X*/ + PLAYER_COLLISION_OFFSET_X - drop_offset;
-                to_drop.y = player.y /*+ PLAYER_OFFSET_Y*/ + PLAYER_COLLISION_OFFSET_Y - drop_offset;
+                to_drop.x = player.x + PLAYER_COLLISION_OFFSET_X - drop_offset;
+                to_drop.y = player.y + PLAYER_COLLISION_OFFSET_Y - drop_offset;
 
 
 
