@@ -23,18 +23,13 @@
 #include "map_data.h"
 #include "saveload.h"
 
-/*
-TODO list:
-Release!
-*/
-
 /* 
 Note:
 Uses EEPROM locations 554 to 599
 */
 
 /* 
-IMPORTANT!: To compile for the original Arduboy, disable the CATHY_3K flag in NPCS.CPP
+IMPORTANT!: To compile for the original Arduboy, disable the CATHY_3K flag in NPCS_TEXT.CPP
 */
 
 

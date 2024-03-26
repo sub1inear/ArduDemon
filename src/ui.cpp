@@ -325,18 +325,12 @@ void draw_inv() {
         uint8_t item_magic_bonus = player.inventory[inv_pointer].magic_bonus;
 
         if (item_type == GOLD) {
-            char buffer[4];
-
-            // if (item_pwramt == 1) {
-            //     sprintf(buffer, "%d PIECE OF ", item_pwramt);
-            // } else {
-            //     sprintf(buffer, "%d PIECES OF ", item_pwramt);
-            // }
-
-            // font3x5.print(buffer);
-            utoa(item_pwramt, buffer, 10);
-            font3x5.print(buffer);
-            font3x5.print(F(" PIECES OF "));
+            font3x5.print(item_pwramt);
+            if (item_pwramt == 1) {
+                font3x5.print(F(" PIECE OF "));
+            } else {
+                font3x5.print(F(" PIECES OF "));
+            }        
         } else {
             if (item_magic_stat != NOSTAT) {
                 font3x5.print(F("MAGIC "));
@@ -346,32 +340,20 @@ void draw_inv() {
         font3x5.println((const char *) pgm_read_ptr(&item_names[item_type]));
         
         if (item_magic_stat != NOSTAT) {
-            char buffer[4];
-
-            //sprintf(buffer, "\n%s +%d", (char *)pgm_read_ptr(&stat_names[item_magic_stat]), item_magic_bonus);
-
             font3x5.print((char *)pgm_read_ptr(&stat_names[item_magic_stat]));
             font3x5.print(F(" +"));
             
-            utoa(item_magic_bonus, buffer, 10);
-            font3x5.print(buffer);
+            font3x5.print(item_magic_bonus);
         }
         if (item_pwramt == 255 && item_type == GOLD) {
             font3x5.print(F("THIS IS AS MUCH GOLD\nAS YOU CAN CARRY."));
         }
-
-        
-        
-        
     }
     
     // stats box
     arduboy.drawRect(STATS_BOX_X, STATS_BOX_Y, STATS_BOX_W, STATS_BOX_H); // stats box
     font3x5.setCursor(STATS_BOX_X + 2, STATS_BOX_Y + 1);
 
-    char buffer[4];
-
-    // sprintf(buffer, "STR %d\nCON %d\nDEX %d\nMNA %d\nLVL %d", player.stats[0], player.stats[1], player.stats[2], player.stats[3], player.level);
     font3x5.print(F("STR "));
     font3x5.println(player.stats[0]);
 

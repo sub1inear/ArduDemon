@@ -167,10 +167,7 @@ void TileMap::draw_dungeon() {
                     } else { // top down tile
                         Sprites::drawOverwrite(x - (player.scrollx & 0xf), y - (player.scrolly & 0xf), tiles, 6);
                     }
-
-                    
                 }
-
             } 
             byte++;
         }

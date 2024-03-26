@@ -116,7 +116,7 @@ void draw_overlay() {
         npc_text_selection = random(7);
     #else
         npc_text_selection += 1;
-        if (npc_text_selection > 1) {
+        if (npc_text_selection > 2) {
             npc_text_selection = 0;
         }
     #endif
@@ -129,7 +129,7 @@ void draw_overlay() {
         case BLACKSMITH:
             font3x5.print(F(
 	            "WELL WHAT CAN I DO FOR YA?\n\n"
-	            "BUY AN GREATAXE 75G\n"
+	            "BUY A GREATAXE 75G\n"
 	            "BUY A GREATSWORD 75G\n"
 	            "BUY A ROYAL SHIELD 50G\n"
             ));

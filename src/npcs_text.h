@@ -26,8 +26,8 @@ const char text_13[] PROGMEM = "I HAVE SEEN THE\nFUTURE, YOUNG LAD.\nYOU WILL DE
 const char * const npcs_text[] PROGMEM {
 	text_0,
 	text_1,
-#ifdef CATHY_3K
     text_2,
+#ifdef CATHY_3K
     text_3,
     text_4,
     text_5,
@@ -35,8 +35,8 @@ const char * const npcs_text[] PROGMEM {
 #endif
     text_7,
     text_8,
-#ifdef CATHY_3K
     text_9,
+#ifdef CATHY_3K
     text_10,
     text_11,
     text_12,
