@@ -57,7 +57,7 @@ void Enemy::init(uint8_t tile_x, uint8_t tile_y, const uint8_t *images, enemy_t 
 
 void Enemy::damage_player() {
     sound.tone(NOTE_C1, 50, NOTE_A1, 100);
-    uint8_t damage_blocked = (player.stats[2] / 10) + (player_defense_lut[player.shield.pwramt]);
+    uint8_t damage_blocked = (player.stats[2] / 10) + pgm_read_byte(player_defense_lut + player.shield.pwramt);
     uint8_t damage = pgm_read_byte(enemy_damage_lut + type);
     if (damage_blocked >= damage) {
         damage = 0;
@@ -176,7 +176,6 @@ void Enemy::update() {
 
             x += x_sign;
 
-
             uint8_t tile_x = (x + PLAYER_COLLISION_OFFSET_X) / 16;
             uint8_t tile_y = (y + PLAYER_COLLISION_OFFSET_Y) / 16;
     
@@ -233,7 +232,7 @@ void Enemy::draw() {
     if (on_screen(x, y, type == BOSS)){
         if (type == BOSS) {
             if (dead) {
-                if (win > 0 && win < 150) {
+                if (win > 0 && win < 25) {
                     arduboy.drawBitmap(x - player.scrollx + 5, y - player.scrolly + 5, blip_image, 8, 8);
                 }
             } else {

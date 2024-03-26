@@ -51,8 +51,8 @@ using uint24_t = __uint24;
 
 void Player::init() {
 
-    x = tile_map->start_tile_x * 16 /*- PLAYER_OFFSET_X*/;
-    y = tile_map->start_tile_y * 16 /*- PLAYER_OFFSET_Y*/;
+    x = tile_map->start_tile_x * 16;
+    y = tile_map->start_tile_y * 16;
 }
 
 bool Player::is_collidable(uint8_t tile_x, uint8_t tile_y) {
@@ -118,8 +118,8 @@ void Player::die() { // sets player.dead and also does work for when we respawn
     
     tile_map = &town_map;
     
-    x = tile_map->start_tile_x * 16 /*- PLAYER_OFFSET_X*/;
-    y = tile_map->start_tile_y * 16 /*- PLAYER_OFFSET_Y*/; 
+    x = tile_map->start_tile_x * 16;
+    y = tile_map->start_tile_y * 16; 
 
     hp = max_hp;
     if (attacking) {
@@ -187,8 +187,8 @@ void Player::teleport() {
             init();
         } else if (on_stairs_up) {
             tile_map = &town_map;
-            x = tile_map->exit_tile_x * 16 /*- PLAYER_OFFSET_X*/;
-            y = tile_map->exit_tile_y * 16 /*- PLAYER_OFFSET_Y*/;
+            x = tile_map->exit_tile_x * 16;
+            y = tile_map->exit_tile_y * 16;
         }
     } else {
         tile_map = &dungeon_map;
@@ -295,8 +295,10 @@ void Player::update() {
                     int16_t x_dist = (enemies[i].x + 8) - (x + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 0));
                     int16_t y_dist = (enemies[i].y + 8) - (y + (int8_t) pgm_read_byte(attack_lut + dir / 3 * 2 + 1));
                     uint24_t distsq = (uint24_t)x_dist * (uint24_t)x_dist + (uint24_t)y_dist * (uint24_t)y_dist;
+                    
+                    uint8_t hit_distsq = (enemies[i].type == BOSS) ? 13 * 13 : 10 * 10;
 
-                    if (distsq < 11 * 11) {
+                    if (distsq < hit_distsq) {
                         target = &enemies[i];
                         
                         uint8_t damage = pgm_read_byte(player_damage_lut + weapon.pwramt) + stats[0] / 5;
@@ -339,7 +341,6 @@ void Player::update() {
                                     stats[2] += 5;
                                     stats[3] += 5;
                                     xp = 0;
-
 
                                     max_hp = stats[1] * 2;
 
@@ -491,7 +492,7 @@ void Player::draw() {
         attacked_timer -= 1;
     }
 
-    Sprites::drawPlusMask(x - scrollx /*+ PLAYER_OFFSET_X*/, y - scrolly /*+ PLAYER_OFFSET_Y*/,
+    Sprites::drawPlusMask(x - scrollx, y - scrolly,
                           player_images, dir + pgm_read_byte(walk_lut + div_frame));
     if (wizard_hat) {
         const uint8_t* hat = wizard_hat_image;
@@ -528,8 +529,8 @@ void Player::draw() {
                 idx -= (idx > 6) ? 2 : 0; // <- handle empty frames
 
                 Sprites::drawSelfMasked(
-                    x + weapon_offset_x - scrollx /*+ PLAYER_OFFSET_X*/,
-                    y + weapon_offset_y - scrolly /*+ PLAYER_OFFSET_Y*/,
+                    x + weapon_offset_x - scrollx,
+                    y + weapon_offset_y - scrolly,
                     weapon_images, idx
                 );
             }
@@ -564,12 +565,12 @@ void Player::draw() {
             }
             if (num_inv < MAX_INV || items[i].type == GOLD) {
                 
-                font3x5.setCursor(x - scrollx + /*PLAYER_OFFSET_X*/ - 1, y - scrolly + /*PLAYER_OFFSET_Y*/ - 18);
+                font3x5.setCursor(x - scrollx - 1, y - scrolly - 18);
                 font3x5.print("HOLD");
-                arduboy.drawBitmap(x - scrollx + /*PLAYER_OFFSET_X*/ + 3, y - scrolly + /*PLAYER_OFFSET_Y*/ - 10, abutton_image, 8, 8);
+                arduboy.drawBitmap(x - scrollx + 3, y - scrolly - 10, abutton_image, 8, 8);
 
                 if (hold_timer > 0) { // progress bar
-                    arduboy.drawFastHLine(x - scrollx + /*PLAYER_OFFSET_X*/ + 2, y - scrolly + /*PLAYER_OFFSET_Y*/ - 2, min(hold_timer, 40) / 4);
+                    arduboy.drawFastHLine(x - scrollx + 2, y - scrolly - 2, min(hold_timer, 40) / 4);
                 }
                 break;
             }

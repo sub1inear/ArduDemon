@@ -58,7 +58,7 @@ uint32_t seed = 0;
 
 bool sub_menu = false;
 bool start_game = false;
-uint8_t win = 0; // timer, when it is 255 win screen is activated
+uint8_t win = 0; // timer, when it is 125 win screen is activated
 
 
 enum GameState: uint8_t {
@@ -92,7 +92,7 @@ void loop() {
 
     arduboy.pollButtons();
 
-    if (win > 0) {
+    if (win > 0 && win < 125) {
         win += 1;
     }
 
@@ -103,22 +103,19 @@ void loop() {
     } else if (start_game) {
         state = GAME;
         start_game = false; 
-    } else if (win == 255) {
+    } else if (win == 125) {
         state = WIN;
     } else if (arduboy.justPressed(B_BUTTON)) {
         if (state == INV) {
             if (!sub_menu) {
                 state = GAME;
             }
-        } else if (state != TITLESCREEN && state != MAINMENU && state != WIN && !player.talking){
+        } else if (state != TITLESCREEN && state != MAINMENU && !player.talking){
             player.hold_timer = 0; // stop hold timer going up forever when exiting out
             state = INV;
         }
-    } else if (arduboy.justReleased(A_BUTTON) && (state == TITLESCREEN || state == WIN)) {
+    } else if (arduboy.justReleased(A_BUTTON) && state == TITLESCREEN) {
         state = MAINMENU;
-        if (state == WIN) {
-            clear_save();
-        }
     }
 
     switch (state) {

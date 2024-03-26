@@ -30,7 +30,7 @@ static int8_t main_menu_pointer = 0;
 
 void draw_win_screen() {
     font3x5.setCursor(WIN_TEXT_X, WIN_TEXT_Y);
-    font3x5.print(F("CONGRATLATIONS!\n   YOU WIN!"));
+    font3x5.print(F("CONGRATULATIONS!\n    YOU WIN!"));
 }
 
 void draw_title_screen() {
