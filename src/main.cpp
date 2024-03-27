@@ -15,6 +15,7 @@
 #include "item.h"
 
 #include "npcs.h"
+#include "npcs_text.h"
 #include "ui.h"
 
 #include "music.h"
@@ -76,7 +77,9 @@ void setup() {
     arduboy.waitNoButtons();
 
     seed = arduboy.generateRandomSeed();
-
+    #ifdef CATHY_3K
+        arduboy.initRandomSeed(); // creates random npc dialogue at the start
+    #endif
     town_map.init(town_data, 32, 32, false, 23, 26, 9, 7);
     player.tile_map = &town_map;
 
