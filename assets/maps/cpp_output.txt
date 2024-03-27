@@ -1,6 +1,3 @@
-#define TOWN_WIDTH 32
-#define TOWN_HEIGHT 32
-
 const uint8_t PROGMEM town_data [] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 14, 15, 16, 
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
