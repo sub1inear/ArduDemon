@@ -455,7 +455,7 @@ void Player::update() {
     }
 
     if (x < -3) { // player image starts 3 pixels in
-        x = 0;
+        x = -3;
     }
     if (y < 0) {
         y = 0;
