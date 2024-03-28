@@ -100,23 +100,8 @@ bool load_game() {
     }
     
     // calculate level
-    uint8_t level_stat = 10;
-    if (player.weapon.magic_stat != NOSTAT) {
-        level_stat = player.stats[player.weapon.magic_stat] - player.weapon.magic_bonus;
-        if (player.weapon.magic_stat == player.shield.magic_stat) { // weapon cannot be NOSTAT so shield cannot be either
-            level_stat -= player.shield.magic_bonus;
-        }
-    } else if (player.shield.magic_stat != NOSTAT) {
-        level_stat = player.stats[player.shield.magic_stat] - player.shield.magic_bonus; 
-    } else {
-        level_stat = player.stats[0];
-    }
-    level_stat -= 10;
-    player.level = level_stat / 5;
+    player.level = (player.stats[MNA] - 10) / 5;
     return true;
-    
-    
-
 }
 void clear_save() {
     eeprom_update_byte(EEPROM_HEADER, 0xFF);

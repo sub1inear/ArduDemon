@@ -127,6 +127,7 @@ void Player::die() { // sets player.dead and also does work for when we respawn
         dir -= 12;
         frame = 0;
     }
+    save_game();
 }
 
 uint8_t Player::check_npcs(uint8_t tile_x, uint8_t tile_y) {
@@ -504,7 +505,7 @@ void Player::draw() {
             hat = wizard_hat_image;
             offset = 3;
         }
-        arduboy.drawBitmap(x - scrollx + offset, y - scrolly - 7, hat, 8, 8);
+        Sprites::drawPlusMask(x - scrollx + offset, y - scrolly - 7, hat, 0);
     }
     if (attacking) {
 
@@ -570,7 +571,7 @@ void Player::draw() {
                 arduboy.drawBitmap(x - scrollx + 3, y - scrolly - 10, abutton_image, 8, 8);
 
                 if (hold_timer > 0) { // progress bar
-                    arduboy.drawFastHLine(x - scrollx + 2, y - scrolly - 2, min(hold_timer, 40) / 4);
+                    arduboy.drawFastHLine(x - scrollx + 2, y - scrolly - 2, min(hold_timer, 30) / 3);
                 }
                 break;
             }
