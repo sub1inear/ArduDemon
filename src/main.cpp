@@ -26,7 +26,7 @@
 
 /* 
 Note:
-Uses EEPROM locations 554 to 599
+Uses EEPROM locations 564 to 599, hash protected
 */
 
 /* 
