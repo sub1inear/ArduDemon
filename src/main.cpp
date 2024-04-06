@@ -36,8 +36,6 @@ IMPORTANT!: To compile for the original Arduboy, disable the CATHY_3K flag in NP
 
 ARDUBOY_NO_USB
 
-extern const uint8_t PROGMEM town_data [32 * 32];
-
 // globals
 Arduboy2Base arduboy;
 Player player;
