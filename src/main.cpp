@@ -74,7 +74,6 @@ void setup() {
     arduboy.beginDoFirst();
     arduboy.waitNoButtons();
 
-    seed = arduboy.generateRandomSeed();
     #ifdef CATHY_3K
         arduboy.initRandomSeed(); // creates random npc dialogue at the start
     #endif

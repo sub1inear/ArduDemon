@@ -23,6 +23,8 @@ extern Font3x5 font3x5;
 extern bool sub_menu;
 extern bool start_game;
 
+extern uint32_t seed;
+
 static int8_t inv_pointer = 0;
 static int8_t sub_pointer = 0;
 
@@ -60,6 +62,7 @@ void update_main_menu() {
             case 1:
                 clear_save();
                 start_game = true;
+                seed = arduboy.generateRandomSeed();
                 break;
             case 2:
                 arduboy.audio.toggle();
